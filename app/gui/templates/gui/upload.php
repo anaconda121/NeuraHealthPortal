@@ -1,4 +1,4 @@
-// Author: Tanish Tyagi
+# Author: Tanish Tyagi
 
 <?php
 
