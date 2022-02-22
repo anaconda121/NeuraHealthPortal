@@ -271,10 +271,13 @@ def sequence_extraction_pipeline(note_txt):
     matches = find_matches(notes, keywords)
     notes["regex_matches"] = matches  
 
+    notes.to_csv("test.csv", index = True)
+
     # TODO: decide if drop rows that do not have regex match -- I think no?
 
     # getting character locations for notes
     character_locations = find_character_locations(notes, keywords)
+    print("char: ", character_locations)
     notes["regex_location"] = character_locations 
 
     # creating context windows

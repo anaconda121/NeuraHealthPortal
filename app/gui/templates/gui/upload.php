@@ -1,5 +1,3 @@
-# Author: Tanish Tyagi
-
 <?php
 
 print_r($_FILES['files']);

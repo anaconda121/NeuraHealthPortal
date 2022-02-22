@@ -22,6 +22,8 @@ def generate_output():
     """
     path = r"C:\Users\tanis\OneDrive - Phillips Exeter Academy\Data\Programming\APOE-SLAT\Web-Tool\app\gui\static\test_notes.txt"
     notes = sequence_extraction_pipeline.sequence_extraction_pipeline(path)
+    print("-----", len(notes), "----")
+
     notes = notes.rename(columns = {'regex_sent': 'text'}) 
     notes = run_clinical_bert.run_cb(notes)
     notes.to_csv(r"C:\Users\tanis\OneDrive - Phillips Exeter Academy\Data\Programming\APOE-SLAT\Web-Tool\app\gui\static\test_preds.csv", index = False)
@@ -64,7 +66,7 @@ def get_overall_results():
     note_count = len(ehr.readlines())
 
     # sequence count
-    sequence_level = pd.read_csv(r"C:\Users\tanis\OneDrive - Phillips Exeter Academy\Data\Programming\APOE-SLAT\Web-Tool\app\gui\static\test_preds_actual.csv")
+    sequence_level = pd.read_csv(r"C:\Users\tanis\OneDrive - Phillips Exeter Academy\Data\Programming\APOE-SLAT\Web-Tool\app\gui\static\test_preds.csv")
     sequence_level = sequence_level.reset_index(drop = True)
     sequence_count = len(sequence_level)
 
@@ -77,9 +79,10 @@ def get_overall_results():
             high_proba_sequences += 1
     
     # patient level CI proba
-    patient_level = pd.read_csv(r"C:\Users\tanis\OneDrive - Phillips Exeter Academy\Data\Programming\APOE-SLAT\Web-Tool\app\gui\static\patient_level_pred_actual.csv")
+    patient_level = pd.read_csv(r"C:\Users\tanis\OneDrive - Phillips Exeter Academy\Data\Programming\APOE-SLAT\Web-Tool\app\gui\static\patient_level_pred.csv")
     two_class_proba = list(eval(patient_level.at[0, "proba"]))
-    yes_proba = two_class_proba[1] * 100
+    print("two:", two_class_proba, len(two_class_proba))
+    yes_proba = two_class_proba[0][1] * 100
     yes_proba = str(round(yes_proba, 2))
 
     return yes_proba, note_count, sequence_count, high_proba_sequences
@@ -93,7 +96,7 @@ def sequence_level_results():
     pred_list = []
     num_list = []
     
-    sequence_level = pd.read_csv(r"C:\Users\tanis\OneDrive - Phillips Exeter Academy\Data\Programming\APOE-SLAT\Web-Tool\app\gui\static\test_preds_actual.csv")
+    sequence_level = pd.read_csv(r"C:\Users\tanis\OneDrive - Phillips Exeter Academy\Data\Programming\APOE-SLAT\Web-Tool\app\gui\static\test_preds.csv")
 
     # getting all sequence level stats
     for i in range(len(sequence_level)):
@@ -149,6 +152,8 @@ def scatterplot(yes_list, path_to_save, format):
     plt.savefig(path_to_save, bbox_inches='tight', format = format)
 
 def output(request):
+    generate_output()
+
     num_list, pred_list, no_list, ntr_list, yes_list, keywords_list, text_list  = sequence_level_results()
     sequence_level_list = zip(num_list, pred_list, no_list, ntr_list, yes_list, keywords_list, text_list)
     yes_proba, note_count, sequence_count, high_proba_sequences = get_overall_results()

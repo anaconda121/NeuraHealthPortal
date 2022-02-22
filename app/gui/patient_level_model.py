@@ -42,10 +42,14 @@ def feature_engineering(notes):
 def run_patient_level(notes):
     patient_level_features = feature_engineering(notes)
     
-    model = pickle.load(open("static/lr_12_26_patient_level.sav", "rb"))
+    model = pickle.load(open(r"C:\Users\tanis\OneDrive - Phillips Exeter Academy\Data\Programming\APOE-SLAT\Web-Tool\app\gui\static\lr_12_26_patient_level.sav", "rb"))
 
     pred = model.predict(patient_level_features)
     proba = model.predict_proba(patient_level_features)
+    proba = str(proba)
+
+    proba = re.sub("\s+", ",", proba.strip())
+    print("proba:" , proba)
 
     patient_level_features["pred"] = pred
     patient_level_features["proba"] = str(proba)

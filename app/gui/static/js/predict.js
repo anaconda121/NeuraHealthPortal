@@ -1,5 +1,3 @@
-// Author: Tanish Tyagi
-
 // redirect user to output page after form submission 
 function redirect() {
   window.location.replace("output.html");
