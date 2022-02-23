@@ -4,9 +4,7 @@
 Tanish Tyagi
 
 ## Description
-Code for Web Portal mentioned in NeuraHealthNLP Paper (ADD LINK).
-
-Main Repo: https://github.com/anaconda121/NeuraHealthNLP
+Code for Web Portal described in NeuraHealth
 
 ## Navigating the Codebase
 1. ``app`` - Root folder for project
