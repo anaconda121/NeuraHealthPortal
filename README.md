@@ -1,4 +1,4 @@
-# NeuraHealthNLPPortal
+# NeuraHealthPortal
  
 ## Author
 Tanish Tyagi
